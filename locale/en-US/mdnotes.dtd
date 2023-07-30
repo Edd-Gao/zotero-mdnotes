@@ -40,6 +40,8 @@
 <!ENTITY mdnotes-overlay-export-item-tooltiptext "Export an item's metadata and notes as a single file">
 <!ENTITY mdnotes-overlay-batch-export-item-label "Batch export to markdown">
 <!ENTITY mdnotes-overlay-batch-export-item-tooltiptext "Create all markdown files for the selected items">
+<!ENTITY mdnotes-overlay-batch-export-flomo-label "Batch export to flomo">
+<!ENTITY mdnotes-overlay-batch-export-flomo-tooltiptext "Create all markdown files for the selected items and export to flomo">
 <!ENTITY mdnotes-overlay-create-notes-file-label "Create Mdnotes file">
 <!ENTITY mdnotes-overlay-create-notes-file-tooltiptext "Create a markdown file for your notes">
 <!ENTITY mdnotes-overlay-create-standalone-note-file-label "Create a standalone note">

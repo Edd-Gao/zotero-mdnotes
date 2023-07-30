@@ -93,8 +93,8 @@ const typemap = {
 };
 
 function getDateAdded(item) {
- const date = new Date(item.getField("dateAdded"));
- return simpleISODate(date)
+  const date = new Date(item.getField("dateAdded"));
+  return simpleISODate(date)
 }
 function getCiteKey(item) {
   if (typeof Zotero.BetterBibTeX === "object" && Zotero.BetterBibTeX !== null) {
@@ -574,7 +574,7 @@ function get_placeholder_contents(template, fields) {
     // Get the settings for that particular placeholder
     let settings = getFormattingSettings(placeholder);
 
-    if (settings.zotero_field){
+    if (settings.zotero_field) {
       if (fields.hasOwnProperty(settings.zotero_field)) {
         let content = fields[settings.zotero_field];
         fields[placeholder] = content;
@@ -728,7 +728,7 @@ async function getZoteroNoteFileContents(item) {
   let fileContents = remove_invalid_placeholders(
     replace_placeholders(template, formattedPlaceholders)
   );
-  
+
   fileContents = replace_wildcards(fileContents, note);
   return { content: fileContents, name: fileName };
 }
@@ -741,10 +741,10 @@ function getObsidianURI(fileName) {
   let uriStart = `obsidian://open?vault=${getPref("obsidian.vault")}&file=`;
 
   let fileWithPath;
-  if(getPref("obsidian.dir").length > 0) {
+  if (getPref("obsidian.dir").length > 0) {
     fileWithPath = getPref("obsidian.dir") + "/" + fileName;
   }
-  else{
+  else {
     fileWithPath = fileName;
   }
 
@@ -953,10 +953,10 @@ Zotero.Mdnotes =
     async getRegularItemContents(item) {
       let metadata = getItemMetadata(item);
       let template = await readTemplate("Zotero Metadata Template");
-      
+
       // Add custom placeholders
       get_placeholder_contents(template, metadata);
-      
+
       // Add formatting
       let formattedPlaceholders = format_placeholders(metadata);
       let newContents = remove_invalid_placeholders(
@@ -1064,6 +1064,62 @@ Zotero.Mdnotes =
           addObsidianLink(outputFile, item);
         }
       }
+    }
+
+    async sendToFlomo(noteContent) {
+      Zotero.debug("Sending note content to Flomo...");
+      var url = 'https://flomoapp.com/iwh/OTcyMDYw/414d91d69c76016b4267c4adaeb18170/';
+      var jsonPayload = JSON.stringify({content: noteContent});
+      var headers = {"Content-type": "application/json"};
+    
+      try {
+        let response = await fetch(url, {
+          method: 'POST',
+          headers: headers,
+          body: jsonPayload
+        });
+    
+        if (!response.ok) {
+          throw new Error("Failed to sync note to flomo: " + response.statusText);
+        }
+      } catch (error) {
+        Zotero.debug(error);
+      }
+    }
+    
+    async batchExportFlomoMenu() {
+      Zotero.debug("Starting batch export to Flomo...");
+      var items = Zotero.getActiveZoteroPane()
+        .getSelectedItems()
+        .filter(
+          (item) =>
+            Zotero.ItemTypes.getName(item.itemTypeID) !== "attachment" &&
+            Zotero.ItemTypes.getName(item.itemTypeID) !== "note"
+        );
+      Zotero.debug("Selected items for export: " + items.length);
+      await Zotero.Schema.schemaUpdatePromise;
+
+      for (const item of items) {
+        Zotero.debug("Processing item: " + item.id);
+        let itemContent;
+        if (getPref("file_conf") === "split") {
+          const files = await this.getFiles(item);
+          Zotero.debug("Item has " + files.length + " files.");
+          for (let exportFile of files) {
+            itemContent = exportFile.content;
+
+            // Send to flomo
+            this.sendToFlomo(itemContent);
+          }
+        } else {
+          let exportFile = await this.getSingleFileExport(item);
+          itemContent = exportFile.content;
+
+          // Send to flomo
+          this.sendToFlomo(itemContent);
+        }
+      }
+      Zotero.debug("Finished batch export to Flomo.");
     }
 
     async batchExportMenu() {
