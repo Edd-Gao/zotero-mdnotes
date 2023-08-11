@@ -1012,8 +1012,10 @@ Zotero.Mdnotes =
       for (let file of files) {
         content += `${file.content}\n\n`;
       }
+      Zotero.debug(files)
 
       exportFile.content = content;
+      Zotero.debug(exportFile)
       return exportFile;
     }
 
@@ -1073,7 +1075,7 @@ Zotero.Mdnotes =
     async sendToFlomo(noteContent) {
       Zotero.debug("Sending note content to Flomo...");
       var url = 'https://flomoapp.com/iwh/OTcyMDYw/414d91d69c76016b4267c4adaeb18170/';
-      var jsonPayload = JSON.stringify({content: noteContent});
+      var jsonPayload = JSON.stringify({content: "#zotero\n"+noteContent});
       var headers = {"Content-type": "application/json"};
     
       try {
