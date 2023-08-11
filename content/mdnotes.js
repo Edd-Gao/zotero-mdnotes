@@ -850,17 +850,21 @@ Zotero.Mdnotes =
         mdexport: 0,
         separator: 1,
         single: 2,
-        batch: 3,
-        mdnotes: 4,
-        standalone: 5,
+        single_flomo: 3,
+        batch: 4,
+        batch_flomo: 5,
+        mdnotes: 6,
+        standalone: 7,
       };
 
       let disableItems = [];
 
       if (getPref("file_conf") === "split") {
         disableItems.push(items.single);
+        disableItems.push(items.single_flomo);
       } else {
         disableItems.push(items.batch);
+        disableItems.push(items.batch_flomo);
         disableItems.push(items.mdnotes);
       }
 

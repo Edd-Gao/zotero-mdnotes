@@ -16,6 +16,7 @@
         <menuitem id="id-mdnotes-export-item" label="&mdnotes-overlay-export-item-label;" tooltiptext="&mdnotes-overlay-export-item-tooltiptext;" oncommand="Zotero.Mdnotes.run('exportToMarkdownMenu')"/>
         <menuseparator id="id-mdnotes-menu-separator"/>
         <menuitem id="id-mdnotes-single-file-export" label="&mdnotes-overlay-single-file-export-label;" tooltiptext="&mdnotes-overlay-export-item-tooltiptext;" oncommand="Zotero.Mdnotes.run('batchExportMenu')"/>
+        <menuitem id="id-mdnotes-single-file-flomo-export" label="&mdnotes-overlay-single-file-flomo-export-label;" tooltiptext="&mdnotes-overlay-export-item-flomo-tooltiptext;" oncommand="Zotero.Mdnotes.run('batchExportFlomoMenu')"/>
         <menuitem id="id-mdnotes-batch-export-item" label="&mdnotes-overlay-batch-export-item-label;" tooltiptext="&mdnotes-overlay-batch-export-item-tooltiptext;" oncommand="Zotero.Mdnotes.run('batchExportMenu')"/>
         <menuitem id="id-mdnotes-batch-export-flomo" label="&mdnotes-overlay-batch-export-flomo-label;" tooltiptext="&mdnotes-overlay-batch-export-flomo-tooltiptext;" oncommand="Zotero.Mdnotes.run('batchExportFlomoMenu')"/>
         <menuitem id="id-mdnotes-create-notes-file" label="&mdnotes-overlay-create-notes-file-label;" tooltiptext="&mdnotes-overlay-create-notes-file-tooltiptext;" oncommand="Zotero.Mdnotes.run('createNoteFileMenu', false)"/>

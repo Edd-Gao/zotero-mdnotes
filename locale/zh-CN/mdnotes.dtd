@@ -44,6 +44,8 @@
 <!ENTITY mdnotes-overlay-export-item-label "导出为markdown">
 <!ENTITY mdnotes-overlay-export-item-tooltiptext "导出所选条目为一个markdown文件">
 <!ENTITY mdnotes-overlay-single-file-export-label "创建完整的导出笔记">
+<!ENTITY mdnotes-overlay-single-file-flomo-export-label "将完整笔记导出到flomo">
+<!ENTITY mdnotes-overlay-export-item-flomo-tooltiptext "把完整笔记导出为markdown并保存到flomo">
 <!ENTITY mdnotes-overlay-export-item-tooltiptext "导出条目的元数据和笔记为单独的文件">
 <!ENTITY mdnotes-overlay-batch-export-item-label "批量导出为markdown文件">
 <!ENTITY mdnotes-overlay-batch-export-item-tooltiptext "为所选条目创建全部的markdown文件">
