@@ -820,6 +820,7 @@ function sanitizeFilename(filename, replacement = '') {
   return filename.replace(/[\/\?<>\\:\*\|"]/g, replacement).trim()
 }
 
+
 Zotero.Mdnotes =
   Zotero.Mdnotes ||
   new (class {
@@ -1072,10 +1073,24 @@ Zotero.Mdnotes =
       }
     }
 
+    async markdownToPlain(str) {
+      const regex = /\[(.+?)\]\((.+?)\)/g; 
+      return str.replace(regex, '$2');
+    }
+
     async sendToFlomo(noteContent) {
       Zotero.debug("Sending note content to Flomo...");
       var url = 'https://flomoapp.com/iwh/OTcyMDYw/414d91d69c76016b4267c4adaeb18170/';
-      var jsonPayload = JSON.stringify({content: "#zotero\n"+noteContent});
+      var noteContentModified = "#zotero\n"+noteContent
+      Zotero.debug("modified_version:"+noteContentModified)
+      try {
+        noteContentModified = await this.markdownToPlain(noteContentModified)
+        Zotero.debug("modified_version:"+noteContentModified)
+      } catch (error) {
+        Zotero.debug(error);
+      }
+
+      var jsonPayload = JSON.stringify({content: noteContentModified});
       var headers = {"Content-type": "application/json"};
     
       try {
@@ -1115,14 +1130,14 @@ Zotero.Mdnotes =
             itemContent = exportFile.content;
 
             // Send to flomo
-            this.sendToFlomo(itemContent);
+            await this.sendToFlomo(itemContent);
           }
         } else {
           let exportFile = await this.getSingleFileExport(item);
           itemContent = exportFile.content;
 
           // Send to flomo
-          this.sendToFlomo(itemContent);
+          await this.sendToFlomo(itemContent);
         }
       }
       Zotero.debug("Finished batch export to Flomo.");
